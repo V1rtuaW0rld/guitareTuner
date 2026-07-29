@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Accordeur Pro - Accordeur de Guitare Haute Précision</title>
+  <meta name="description" content="Accordeur de guitare en ligne haute précision basé sur l'algorithme YIN et Web Audio API. Responsive, rapide et fluide.">
+  
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Application Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <div class="app-container">
+    <div class="dashboard-grid">
+
+      <!-- LEFT COLUMN: Tuner, Controls & Strings -->
+      <div class="tuner-column">
+
+        <!-- Tuning & Mode Controls Bar -->
+        <section class="controls-card">
+          <div class="select-group">
+            <label for="tuningSelect" class="select-label">Accordage</label>
+            <select id="tuningSelect" class="custom-select">
+              <option value="standard" selected>Capo 0 - Standard (E A D G B E)</option>
+              
+              <optgroup label="Accordages Graves">
+                <option value="capo_minus_1">Capo -1 (D# G# C# F# A# D#)</option>
+                <option value="capo_minus_2">Capo -2 (D G C F A D)</option>
+                <option value="capo_minus_3">Capo -3 (C# F# B E G# C#)</option>
+                <option value="capo_minus_4">Capo -4 (C F A# D# G C)</option>
+              </optgroup>
+
+              <optgroup label="Transpositions Capodastre">
+                <option value="capo_plus_1">Capo +1 (F A# D# G# C F)</option>
+                <option value="capo_plus_2">Capo +2 (F# B E A C# F#)</option>
+                <option value="capo_plus_3">Capo +3 (G C F A# D G)</option>
+                <option value="capo_plus_4">Capo +4 (G# C# F# B D# G#)</option>
+                <option value="capo_plus_5">Capo +5 (A D G C E A)</option>
+                <option value="capo_plus_6">Capo +6 (A# D# G# C# F A#)</option>
+                <option value="capo_plus_7">Capo +7 (B E A D F# B)</option>
+                <option value="capo_plus_8">Capo +8 (C F A# D# G C)</option>
+                <option value="capo_plus_9">Capo +9 (C# F# B E G# C#)</option>
+                <option value="capo_plus_10">Capo +10 (D G C F A D)</option>
+                <option value="capo_plus_11">Capo +11 (D# G# C# F# A# D#)</option>
+                <option value="capo_plus_12">Capo +12 (E A D G B E)</option>
+              </optgroup>
+
+              <optgroup label="Accordages Spéciaux">
+                <option value="dropD">Drop D (D A D G B E)</option>
+                <option value="openD">Open D (D A D F# A D)</option>
+              </optgroup>
+            </select>
+          </div>
+        </section>
+
+        <!-- Main Dynamic Tuner Display -->
+        <main id="tunerCard" class="tuner-card">
+          
+          <!-- Central Note Letter & Octave Badge -->
+          <div class="note-display">
+            <span id="noteLetter" class="note-letter">--</span>
+            <span id="noteOctave" class="note-octave"></span>
+          </div>
+
+          <!-- High Precision Canvas Gauge -->
+          <div class="gauge-container">
+            <canvas id="gaugeCanvas"></canvas>
+          </div>
+
+          <!-- Readouts: Hz, Cents, Target & Status -->
+          <div class="readout-row">
+            <div class="readout-item">
+              <span id="frequencyVal" class="readout-val">-- Hz</span>
+              <span class="readout-sub">Fréquence</span>
+            </div>
+
+            <div class="readout-item">
+              <span id="statusBadge" class="status-badge">INACTIF</span>
+            </div>
+
+            <div class="readout-item">
+              <span id="centsVal" class="readout-val">-- cents</span>
+              <span class="readout-sub">Décalage</span>
+            </div>
+          </div>
+
+          <!-- Audio Signal Level Indicator with dB Readout -->
+          <div class="volume-meter" title="Niveau Audio Input (dB)">
+            <div id="volumeFill" class="volume-fill"></div>
+            <span id="dbVal" class="db-val-overlay">-∞ dB</span>
+          </div>
+
+          <!-- Real-Time Equalizer & Oscilloscope Monitor -->
+          <div class="visualizer-container">
+            <span class="visualizer-label">Moniteur Audio (FFT Equalizer)</span>
+            <canvas id="visualizerCanvas"></canvas>
+          </div>
+
+        </main>
+
+        <!-- Headstock / Interactive String Pin Selector -->
+        <section class="strings-card">
+          <div class="strings-header">
+            <span class="strings-title">Cordes de Guitare</span>
+            <button id="autoBtn" class="auto-btn active">Mode Auto</button>
+          </div>
+          
+          <div id="stringsGrid" class="strings-grid">
+            <!-- String pins rendered dynamically by app.js -->
+          </div>
+        </section>
+      </div>
+
+      <!-- RIGHT COLUMN: Audio Diagnostic Doctor & Debug Console -->
+      <div class="debug-column">
+        <section class="debug-card">
+          <div class="debug-header" id="debugHeader">
+            <div class="debug-title">
+              <span>🩺 Diagnostic Chaîne Audio (Debug Doctor)</span>
+            </div>
+            <button id="debugToggleBtn" class="debug-toggle-btn">Masquer / Afficher</button>
+          </div>
+
+          <div id="debugBody" class="debug-body">
+            
+            <!-- Step-by-Step Chain Checks -->
+            <div class="debug-grid">
+              
+              <div class="debug-step">
+                <div class="step-num">1</div>
+                <div class="step-info">
+                  <div class="step-title">Conduit Auditif (Périphérique)</div>
+                  <div id="step1Status" class="step-detail">Microphone: --</div>
+                </div>
+                <span id="step1Badge" class="step-badge pending">EN ATTENTE</span>
+              </div>
+
+              <div class="debug-step">
+                <div class="step-num">2</div>
+                <div class="step-info">
+                  <div class="step-title">Tympan (AudioContext Stream)</div>
+                  <div id="step2Status" class="step-detail">État: Inactif | 0 Hz</div>
+                </div>
+                <span id="step2Badge" class="step-badge pending">INACTIF</span>
+              </div>
+
+              <div class="debug-step">
+                <div class="step-num">3</div>
+                <div class="step-info">
+                  <div class="step-title">Signal PCM Brut (Volume / Peak)</div>
+                  <div id="step3Status" class="step-detail">RMS: 0.0000 | Peak: 0.0000</div>
+                </div>
+                <span id="step3Badge" class="step-badge pending">SILENCE</span>
+              </div>
+
+              <div class="debug-step">
+                <div class="step-num">4</div>
+                <div class="step-info">
+                  <div class="step-title">Algorithme YIN (Pitch Engine)</div>
+                  <div id="step4Status" class="step-detail">Hz: -- | Clarté: --</div>
+                </div>
+                <span id="step4Badge" class="step-badge pending">AUCUN PITCH</span>
+              </div>
+
+            </div>
+
+            <!-- Diagnostic Tools & Performance Mode Switcher -->
+            <div class="debug-actions">
+              <div class="mode-toggle-row">
+                <span class="mode-toggle-label">Mode Performance :</span>
+                <div class="mode-toggle-group">
+                  <button id="modeEcoBtn" class="perf-mode-btn active eco">🍃 Mode Éco (30 FPS)</button>
+                  <button id="modeTurboBtn" class="perf-mode-btn turbo">⚡ Mode Turbo (120 FPS)</button>
+                </div>
+              </div>
+              <div class="debug-btn-row">
+                <button id="synthTestBtn" class="synth-btn">🧪 Tester Onde Synthétique (La 440 Hz)</button>
+                <button id="copyLogsBtn" class="copy-logs-btn">📋 Copier les Logs Texte</button>
+              </div>
+              <span class="debug-hint">Basculez entre l'économie de batterie (30 FPS) et le mode ultra-réactif (120 FPS).</span>
+            </div>
+
+            <!-- Verbose Text Log Terminal -->
+            <div class="log-terminal-container">
+              <div class="log-terminal-header">
+                <span>Terminal de Logs Verbose (Copier/Coller)</span>
+                <button id="clearLogsBtn" class="clear-logs-btn">Effacer</button>
+              </div>
+              <textarea id="logTerminal" class="log-terminal" readonly rows="6" placeholder="Les logs d'analyse s'afficheront ici en temps réel..."></textarea>
+            </div>
+
+          </div>
+        </section>
+      </div>
+
+    </div>
+
+    <footer class="footer-note">
+      <p>Architecture <code>core-audio</code> prête pour extraction Kotlin Multiplatform / Android Native APK.</p>
+    </footer>
+
+  </div>
+
+  <!-- Entry Script (ES Module) -->
+  <script type="module" src="js/app.js?v=4"></script>
+</body>
+</html>

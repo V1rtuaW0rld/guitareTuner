@@ -1,0 +1,1062 @@
+/* ==========================================================================
+   Accordeur Pro - Modern Dark Design System & Styling
+   Inspired by GuitarTuna with rich glassmorphism & dynamic glowing feedback.
+   ========================================================================== */
+
+:root {
+  color-scheme: dark;
+
+  /* Color Tokens */
+  --bg-primary: #0b0f19;
+  --bg-card: rgba(18, 26, 43, 0.75);
+  --bg-card-hover: rgba(30, 41, 65, 0.85);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-glow: rgba(16, 185, 129, 0.3);
+  
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+
+  /* Tuning State Colors */
+  --color-intune: #10b981;        /* Vibrant Emerald Green */
+  --color-intune-glow: rgba(16, 185, 129, 0.5);
+  --color-flat: #f59e0b;          /* Warning Amber / Orange */
+  --color-sharp: #ef4444;         /* Alert Red */
+  --color-accent: #3b82f6;        /* Deep Neon Blue */
+
+  /* Typography */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  
+  /* Radii & Shadows */
+  --radius-lg: 20px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+  --shadow-intune: 0 0 40px rgba(16, 185, 129, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-primary);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.12) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.1) 0px, transparent 50%),
+    radial-gradient(at 50% 50%, rgba(15, 23, 42, 0.8) 0px, transparent 100%);
+  color: var(--text-main);
+  font-family: var(--font-family);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 1.5rem 1rem;
+  overflow-x: hidden;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 1280px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* 2-Column Side-by-Side Dashboard Layout */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.tuner-column, .debug-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Mobile responsive fallback */
+@media (max-width: 900px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- Header Section --- */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-color);
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-glass);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.brand-icon {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #3b82f6, #10b981);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.brand-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: linear-gradient(to right, #ffffff, #cbd5e1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.mic-btn {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.1rem;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+}
+
+.mic-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.45);
+}
+
+.mic-btn.active {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35);
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #fff;
+  display: inline-block;
+}
+
+.mic-btn.active .pulse-dot {
+  animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+  70% { transform: scale(1.15); box-shadow: 0 0 0 6px rgba(255, 255, 255, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+}
+
+/* --- Control Bar --- */
+.controls-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  position: relative;
+  z-index: 50; /* Ensures the custom select dropdown stays above the tuner card below */
+}
+
+.select-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+  min-width: 0; /* Prevents flex items from overflowing parent */
+}
+
+.select-label {
+  font-size: 0.725rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* --- Custom HTML/JS Dropdown Menu --- */
+.custom-select-wrapper {
+  position: relative;
+  width: 100%;
+  user-select: none;
+}
+
+.custom-select-trigger {
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.custom-select-trigger:hover, .custom-select-wrapper.open .custom-select-trigger {
+  border-color: var(--color-accent);
+  background: rgba(30, 41, 65, 0.95);
+}
+
+.custom-select-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.custom-select-icon {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  transition: transform 0.2s ease;
+}
+
+.custom-select-wrapper.open .custom-select-icon {
+  transform: rotate(180deg);
+}
+
+.custom-select-menu {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  width: 100%;
+  max-height: calc(100vh - 100px); /* 100% de l'espace disponible jusqu'en bas */
+  background: #1e293b;
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+  overflow-y: auto;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.custom-select-wrapper.open .custom-select-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.custom-select-optgroup-label {
+  padding: 8px 12px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #60a5fa;
+  background-color: #0f172a;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.custom-select-option {
+  padding: 10px 15px;
+  font-size: 0.8rem;
+  color: #f8fafc;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.custom-select-option:hover {
+  background: rgba(59, 130, 246, 0.2);
+}
+
+.custom-select-option.selected {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+  font-weight: 600;
+  border-left: 3px solid #10b981;
+}
+
+/* Custom Scrollbar for the menu */
+.custom-select-menu::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-select-menu::-webkit-scrollbar-track {
+  background: #0f172a;
+  border-radius: 4px;
+}
+.custom-select-menu::-webkit-scrollbar-thumb {
+  background: #475569;
+  border-radius: 4px;
+}
+.custom-select-menu::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* --- Main Tuner Display Card --- */
+.tuner-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 1.25rem;
+  box-shadow: var(--shadow-glass);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tuner-card.in-tune {
+  border-color: var(--color-intune);
+  box-shadow: var(--shadow-intune);
+}
+
+/* Note Display Badge */
+.note-display {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  position: absolute;
+  top: 1.5rem;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.note-letter {
+  font-size: 4.5rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--text-main);
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.note-octave {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-top: 0.4rem;
+  margin-left: 0.15rem;
+}
+
+.tuner-card.in-tune .note-letter {
+  color: var(--color-intune);
+  text-shadow: 0 0 24px rgba(16, 185, 129, 0.6);
+  transform: scale(1.05);
+}
+
+.tuner-card.flat .note-letter {
+  color: var(--color-flat);
+}
+
+.tuner-card.sharp .note-letter {
+  color: var(--color-sharp);
+}
+
+/* Gauge Canvas Container */
+.gauge-container {
+  width: 100%;
+  max-width: 600px; /* Increased from 380px for desktop */
+  flex: 1; /* Allow it to grow vertically */
+  min-height: 220px; /* Ensure a decent minimum height */
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+#gaugeCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Readouts (Hz & Cents) */
+.readout-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.readout-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.readout-val {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-main);
+  font-variant-numeric: tabular-nums;
+}
+
+.readout-sub {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-top: 0.15rem;
+}
+
+.status-badge {
+  padding: 0.35rem 0.85rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-muted);
+  transition: all 0.3s ease;
+}
+
+.status-badge.listening {
+  background: rgba(59, 130, 246, 0.2);
+  color: var(--color-accent);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+}
+
+.status-badge.in-tune {
+  background: rgba(16, 185, 129, 0.2);
+  color: var(--color-intune);
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.3);
+}
+
+.status-badge.flat {
+  background: rgba(245, 158, 11, 0.2);
+  color: var(--color-flat);
+}
+
+.status-badge.sharp {
+  background: rgba(239, 68, 68, 0.2);
+  color: var(--color-sharp);
+}
+
+/* Audio Level Bar */
+.volume-meter {
+  width: 100%;
+  height: 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  margin-top: 0.75rem;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.volume-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(to right, var(--color-accent), var(--color-intune));
+  transition: width 0.08s ease-out;
+}
+
+.db-val-overlay {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: 0.05em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  pointer-events: none;
+}
+
+/* Audio Visualizer Monitor Equalizer */
+.visualizer-container {
+  width: 100%;
+  height: 64px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  margin-top: 0.75rem;
+  position: relative;
+  overflow: hidden;
+}
+
+#visualizerCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.visualizer-label {
+  position: absolute;
+  top: 6px;
+  left: 10px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  pointer-events: none;
+  background: rgba(15, 23, 42, 0.7);
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+}
+
+/* --- Guitar String Selector Headstock Card --- */
+.strings-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+}
+
+.strings-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.strings-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.auto-btn {
+  background: rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  color: #60a5fa;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.3rem 0.7rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.auto-btn.active {
+  background: var(--color-accent);
+  color: #fff;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+}
+
+.strings-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.5rem;
+}
+
+.string-pin {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 0.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.string-pin:hover {
+  background: var(--bg-card-hover);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.string-pin.selected {
+  border-color: var(--color-accent);
+  background: rgba(59, 130, 246, 0.18);
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.25);
+}
+
+.string-pin.detected {
+  border-color: var(--color-intune);
+  background: rgba(16, 185, 129, 0.18);
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.3);
+}
+
+.string-num {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--text-dim);
+}
+
+.string-note {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.string-freq {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+
+/* --- Debug Doctor Diagnostic Card --- */
+.debug-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-glass);
+}
+
+.debug-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+}
+
+.debug-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.debug-toggle-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  font-size: 0.725rem;
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.debug-body {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.debug-body.hidden {
+  display: none;
+}
+
+.debug-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+}
+
+.debug-step {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.65rem 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.step-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(59, 130, 246, 0.2);
+  color: #60a5fa;
+  font-size: 0.75rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.step-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.step-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.step-detail {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: monospace;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.step-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+
+.step-badge.pending {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-dim);
+}
+
+.step-badge.ok {
+  background: rgba(16, 185, 129, 0.2);
+  color: var(--color-intune);
+}
+
+.step-badge.warn {
+  background: rgba(245, 158, 11, 0.2);
+  color: var(--color-flat);
+}
+
+.step-badge.err {
+  background: rgba(239, 68, 68, 0.2);
+  color: var(--color-sharp);
+}
+
+.debug-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.debug-btn-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.synth-btn {
+  flex: 1;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #fff;
+  border: none;
+  padding: 0.55rem 0.85rem;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  font-size: 0.775rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.copy-logs-btn {
+  background: rgba(59, 130, 246, 0.2);
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  color: #60a5fa;
+  padding: 0.55rem 0.85rem;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  font-size: 0.775rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.copy-logs-btn:hover {
+  background: rgba(59, 130, 246, 0.35);
+  color: #fff;
+}
+
+.log-terminal-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+}
+
+.log-terminal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.clear-logs-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  font-size: 0.65rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.log-terminal {
+  width: 100%;
+  height: 280px;
+  background: rgba(10, 15, 26, 0.95);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: #38bdf8;
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 0.725rem;
+  line-height: 1.4;
+  padding: 0.5rem;
+  resize: vertical;
+  outline: none;
+}
+
+.debug-hint {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+/* Footer / KMP Callout */
+.footer-note {
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-top: 0.5rem;
+}
+
+/* Media Queries & Mobile APK Layout Optimization */
+@media (max-width: 900px), body.is-mobile-apk {
+  body {
+    padding: 0.25rem 0.25rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .app-container {
+    gap: 0.25rem;
+  }
+
+  .header {
+    display: none !important;
+  }
+
+  /* Guarantee Accordage + Tuner + Strings fill exactly 100% of screen height */
+  .tuner-column {
+    min-height: calc(100vh - 0.5rem);
+    min-height: calc(100dvh - 0.5rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.35rem;
+  }
+
+  /* Push Debug Doctor completely below the 100vh screen fold */
+  .side-column {
+    margin-top: 2rem;
+  }
+
+  .controls-card {
+    padding: 0.3rem 0.6rem;
+    border-radius: var(--radius-sm);
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  .select-label {
+    font-size: 0.65rem;
+  }
+
+  .custom-select {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .tuner-card {
+    padding: 0.5rem;
+    border-radius: var(--radius-md);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Changed from space-between to avoid gaps */
+  }
+
+  .note-display {
+    margin-top: 0;
+    top: 0.5rem;
+  }
+
+  .note-letter {
+    font-size: 3.2rem;
+  }
+
+  .gauge-container {
+    flex: 1;
+    height: auto; /* Overrides desktop fixed height */
+    min-height: 150px;
+    width: 100%;
+    max-width: 440px;
+    margin: 0.25rem 0 0 0; /* No margin-bottom to touch the readout border */
+  }
+
+  .readout-row {
+    margin-top: 0; /* No margin-top to touch the canvas */
+  }
+
+  .readout-val {
+    font-size: 0.9rem;
+  }
+
+  .readout-sub {
+    font-size: 0.6rem;
+  }
+
+  .volume-meter {
+    height: 12px;
+    margin-top: 0.25rem;
+  }
+
+  /* FFT Equalizer Monitor fixed compact height (leaving space for Tuner gauge) */
+  .visualizer-container {
+    margin-top: 0.25rem;
+    padding: 0.2rem 0.5rem;
+    flex: 0 0 auto;
+    height: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .visualizer-container canvas {
+    height: 70px;
+    width: 100%;
+  }
+
+  /* Strings Vignettes stay perfectly formatted as in Image 1 */
+  .strings-card {
+    padding: 0.45rem 0.4rem;
+    border-radius: var(--radius-md);
+    flex-shrink: 0;
+  }
+
+  .strings-header {
+    margin-bottom: 0.3rem;
+  }
+
+  .strings-title {
+    font-size: 0.75rem;
+  }
+
+  .strings-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.35rem;
+  }
+
+  .string-pin {
+    padding: 0.35rem 0.25rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .string-num {
+    font-size: 0.6rem;
+  }
+
+  .string-note {
+    font-size: 0.95rem;
+  }
+
+  .string-freq {
+    font-size: 0.6rem;
+  }
+
+  .footer-note {
+    display: none;
+  }
+}
+
+/* --- Performance Mode Switcher --- */
+.mode-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  background: rgba(15, 23, 42, 0.5);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+}
+
+.mode-toggle-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.mode-toggle-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.perf-mode-btn {
+  padding: 0.35rem 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  background: rgba(30, 41, 59, 0.7);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.perf-mode-btn.eco.active {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+  border-color: #10b981;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+}
+
+.perf-mode-btn.turbo.active {
+  background: rgba(245, 158, 11, 0.2);
+  color: #f59e0b;
+  border-color: #f59e0b;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
+}

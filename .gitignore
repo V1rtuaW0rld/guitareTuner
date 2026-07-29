@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+desktop/node_modules/
+
+# Windows Desktop Builds
+desktop/dist/
+*.exe
+*.zip
+
+# Android APK & Gradle Builds
+APK/.gradle/
+APK/build/
+APK/app/build/
+APK/captures/
+APK/.externalNativeBuild/
+APK/.cxx/
+APK/local.properties
+*.apk
+*.ap_
+*.dex
+*.class
+
+# Log files & scratch
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Backup directories
+* - Copy/
+*-Copy/
+*_backup/
+
+# Windows System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE & Editor files
+.idea/
+.vscode/
+*.swp
+*.swo
