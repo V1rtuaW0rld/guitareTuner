@@ -72,11 +72,20 @@ body {
   display: grid;
   grid-template-columns: 4.2fr 5.8fr;
   gap: 0.85rem;
-  align-items: flex-start;
+  align-items: stretch;
   flex: 1;
+  min-height: 0;
 }
 
-.tuner-column, .debug-column {
+.tuner-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  height: calc(100vh - 95px);
+  position: sticky;
+  top: 15px;
+}
+.debug-column {
   display: flex;
   flex-direction: column;
   gap: 0.65rem;
@@ -423,7 +432,7 @@ body {
   width: 100%;
   max-width: 580px;
   flex: 1;
-  min-height: 190px;
+  min-height: 100px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -446,12 +455,6 @@ body {
   width: 100%;
   margin-top: 0.35rem;
   padding-top: 0.35rem;
-  border-top: 1px solid var(--border-color);
-}
-  justify-content: space-around;
-  width: 100%;
-  margin-top: 0.75rem;
-  padding-top: 0.75rem;
   border-top: 1px solid var(--border-color);
 }
 
@@ -545,7 +548,7 @@ body {
 /* Audio Visualizer Monitor Equalizer */
 .visualizer-container {
   width: 100%;
-  height: 64px;
+  height: 75px;
   background: rgba(15, 23, 42, 0.6);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
