@@ -81,7 +81,6 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.65rem;
-  height: calc(100vh - 150px);
   position: sticky;
   top: 15px;
 }
@@ -432,7 +431,7 @@ body {
   width: 100%;
   max-width: 580px;
   flex: 1;
-  min-height: 100px;
+  min-height: 250px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -940,6 +939,7 @@ body {
   .tuner-column {
     height: calc(100vh - 60px);
     height: calc(100dvh - 60px);
+    min-height: 550px;
     position: static;
     display: flex;
     flex-direction: column;
