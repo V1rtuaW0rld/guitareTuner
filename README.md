@@ -4,6 +4,8 @@
 
 **GuitareTuner** est une application d'accordage de guitare haute précision, multiplateforme (Web, Android, Windows Desktop), intégrant une détection de pitch en temps réel via l'algorithme YIN, une visualisation sismographique élégante et une gestion complète des transpositions de capodastre.
 
+<img width="438" height="855" alt="image" src="https://github.com/user-attachments/assets/4a09f3e5-b627-4971-8f8a-7f5074308f29" />
+
 ---
 
 ## 🌟 Fonctionnalités Clés
@@ -12,6 +14,9 @@
   - Ajustement automatique de la fréquence cible et des notes selon le positionnement du capodastre.
   - Prise en charge des accordages alternatifs et exotiques (Drop D, Open D, etc.).
   - Sélecteur de capodastre sur-mesure, ergonomique et responsive.
+ 
+<img width="498" height="950" alt="image" src="https://github.com/user-attachments/assets/d5e0feb7-07c4-45ee-81ab-e793429b88fb" />
+
 
 * ⚡ **Détection de Pitch Ultra-Précise (Algorithme YIN)** :
   - Analyse spectrale et autocorrélation en temps réel du signal audio.
