@@ -92,8 +92,8 @@ export class TunerGauge {
     ctx.clearRect(0, 0, w, h);
 
     const centerX = w / 2;
-    // Pivot de l'aiguille abaissé au maximum pour gagner de la longueur
-    const centerY = h - 5; 
+    // Pivot de l'aiguille abaissé au maximum pour gagner de la longueur (évite le rognage)
+    const centerY = h - 10; 
     
     // Rayon équilibré pour laisser de l'espace en haut pour le sismographe
     const radius = Math.min(w * 0.46, h * 0.80);
