@@ -907,7 +907,9 @@ body {
   }
 
   .header {
-    display: none !important;
+    display: flex;
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 0.25rem;
   }
 
   /* Guarantee Accordage + Tuner + Strings fill exactly 100% of screen height */

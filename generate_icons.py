@@ -4,12 +4,12 @@ from PIL import Image, ImageDraw
 SRC_PATH = r"D:\Applications\Accordeur\GuitarCapoTuner.png"
 
 def make_square(img):
-    """Crops the image to a square from center with padding so it isn't zoomed/cropped."""
+    """Crops the image to a square so icon fills the medallion to the corners."""
     w, h = img.size
     max_dim = max(w, h)
     
-    # 15% padding margin around the graphic
-    canvas_size = int(max_dim * 1.18)
+    # Minimal canvas size so corners touch/almost touch the medallion edge
+    canvas_size = max_dim
     
     # Create new RGBA square canvas
     new_img = Image.new("RGBA", (canvas_size, canvas_size), (0, 0, 0, 0))
