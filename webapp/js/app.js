@@ -144,6 +144,7 @@ class AccordeurApp {
     this.modeTurboBtn = document.getElementById('modeTurboBtn');
   }
 
+  bindEvents() {
     const resumeAudioContext = () => {
       if (this.audioContext && this.audioContext.state === 'suspended' && this.isListening) {
         this.audioContext.resume().then(() => {
@@ -362,7 +363,8 @@ class AccordeurApp {
       this.micStream = null;
     }
     if (this.audioContext && this.audioContext.state !== 'closed') {
-      this.audioContext.suspend();
+      this.audioContext.close();
+      this.audioContext = null;
     }
     if (this.micToggleBtn) this.micToggleBtn.classList.remove('active');
     if (this.micBtnText) this.micBtnText.textContent = 'Activer le Micro';
@@ -371,6 +373,7 @@ class AccordeurApp {
       this.statusBadgeEl.className = 'status-badge idle';
     }
     if (this.tunerCard) this.tunerCard.className = 'tuner-card idle';
+    this.resetUI();
   }
 
   async startMicrophone() {
