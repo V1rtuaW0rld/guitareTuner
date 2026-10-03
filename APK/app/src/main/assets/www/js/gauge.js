@@ -92,8 +92,8 @@ export class TunerGauge {
     ctx.clearRect(0, 0, w, h);
 
     const centerX = w / 2;
-    // Pivot de l'aiguille remonté légèrement pour ne pas toucher le bord inférieur moche
-    const centerY = h - 15; 
+    // Pivot de l'aiguille abaissé au maximum pour gagner de la longueur
+    const centerY = h - 5; 
     
     // Rayon élargi pour s'adapter à la largeur de l'écran sans être écrasé
     const radius = Math.min(w * 0.48, h * 0.85);

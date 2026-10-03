@@ -10,7 +10,8 @@ function createWindow() {
     height: 850,
     minWidth: 900,
     minHeight: 650,
-    title: 'Accordeur Pro - Accordage & Sismographe Audio',
+    title: 'GCT • GuitarCapoTuner Pro',
+    icon: path.join(__dirname, 'icon.png'),
     backgroundColor: '#0b1120',
     autoHideMenuBar: true,
     webPreferences: {

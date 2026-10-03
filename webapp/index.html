@@ -3,9 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Accordeur Pro - Accordeur de Guitare Haute Précision</title>
-  <meta name="description" content="Accordeur de guitare en ligne haute précision basé sur l'algorithme YIN et Web Audio API. Responsive, rapide et fluide.">
+  <title>GCT • GuitarCapoTuner Pro</title>
+  <meta name="description" content="Accordeur de guitare en ligne haute précision avec capodastre basé sur l'algorithme YIN et Web Audio API. Responsive, rapide et fluide.">
   
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" href="favicon.png">
+
   <!-- Google Fonts: Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,6 +20,22 @@
 <body>
 
   <div class="app-container">
+
+    <!-- Top Header Bar with GCT Branding -->
+    <header class="header">
+      <div class="brand">
+        <img src="icon.png" alt="GuitarCapoTuner Icon" class="brand-img">
+        <div class="brand-text">
+          <span class="brand-badge">GCT</span>
+          <span class="brand-title">GuitarCapoTuner <span class="brand-pro">PRO</span></span>
+        </div>
+      </div>
+      <button id="micToggleBtn" class="mic-btn">
+        <span class="pulse-dot"></span>
+        <span id="micBtnText">Activer le Micro</span>
+      </button>
+    </header>
+
     <div class="dashboard-grid">
 
       <!-- LEFT COLUMN: Tuner, Controls & Strings -->
