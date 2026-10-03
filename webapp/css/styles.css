@@ -938,8 +938,9 @@ body {
   }
 
   .tuner-column {
-    min-height: calc(100vh - 0.5rem);
-    min-height: calc(100dvh - 0.5rem);
+    height: calc(100vh - 75px);
+    height: calc(100dvh - 75px);
+    position: static;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
