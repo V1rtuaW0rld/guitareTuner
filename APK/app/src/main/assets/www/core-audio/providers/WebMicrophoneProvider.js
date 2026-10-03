@@ -15,8 +15,8 @@ export class WebMicrophoneProvider extends MicrophoneProvider {
     this.stop(); // Ensure any previous stream is stopped
 
     let constraints = { audio: true };
-    if (this.selectedDeviceId) {
-      constraints = { audio: { deviceId: { exact: this.selectedDeviceId } } };
+    if (this.selectedDeviceId && this.selectedDeviceId !== 'default') {
+      constraints = { audio: { deviceId: { ideal: this.selectedDeviceId } } };
     }
 
     this.stream = await navigator.mediaDevices.getUserMedia(constraints);
@@ -24,7 +24,6 @@ export class WebMicrophoneProvider extends MicrophoneProvider {
     this.log(`🌐 [WEB] CAPTATION MICRO: "${track.label}" (Muted: ${track.muted})`);
 
     // FIREFOX WEBRTC BUG WORKAROUND: Force OS to pump data by attaching stream to a muted <audio> element
-    // Without this, some USB mics return silent 0.000 buffers in Firefox!
     if (!this.hiddenAudioEl) {
       this.hiddenAudioEl = new Audio();
       this.hiddenAudioEl.muted = true;
@@ -35,5 +34,14 @@ export class WebMicrophoneProvider extends MicrophoneProvider {
     });
 
     return this.stream;
+  }
+
+  stop() {
+    if (this.hiddenAudioEl) {
+      this.hiddenAudioEl.pause();
+      this.hiddenAudioEl.srcObject = null;
+      this.hiddenAudioEl = null;
+    }
+    super.stop();
   }
 }

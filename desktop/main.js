@@ -11,7 +11,7 @@ function createWindow() {
     minWidth: 900,
     minHeight: 650,
     title: 'GCT • GuitarCapoTuner Pro',
-    icon: path.join(__dirname, 'icon.png'),
+    icon: path.join(__dirname, 'icon.ico'),
     backgroundColor: '#0b1120',
     autoHideMenuBar: true,
     webPreferences: {

@@ -28,6 +28,8 @@
     "files": [
       "main.js",
       "server.js",
+      "icon.ico",
+      "icon.png",
       "webapp/**/*"
     ]
   }
