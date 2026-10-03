@@ -144,24 +144,20 @@ class AccordeurApp {
     this.modeTurboBtn = document.getElementById('modeTurboBtn');
   }
 
-  bindEvents() {
-    const autoResumeAndStart = () => {
-      if (this.audioContext && this.audioContext.state === 'suspended') {
+    const resumeAudioContext = () => {
+      if (this.audioContext && this.audioContext.state === 'suspended' && this.isListening) {
         this.audioContext.resume().then(() => {
           this.log('▶️ AudioContext réactivé');
         });
       }
-      if (!this.isListening) {
-        this.startMicrophone();
-      }
     };
 
-    document.addEventListener('click', autoResumeAndStart);
-    document.addEventListener('touchstart', autoResumeAndStart);
+    document.addEventListener('click', resumeAudioContext);
+    document.addEventListener('touchstart', resumeAudioContext);
 
     if (this.micToggleBtn) {
-      this.micToggleBtn.addEventListener('click', () => {
-        autoResumeAndStart();
+      this.micToggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
         this.toggleMicrophone();
       });
     }
@@ -443,29 +439,8 @@ class AccordeurApp {
       this.isListening = false;
       if (this.micToggleBtn) this.micToggleBtn.classList.remove('active');
       if (this.micBtnText) this.micBtnText.textContent = 'Activer le Micro';
-      alert('Impossible d\'accéder au microphone choisi. Veuillez vérifier les permissions de votre navigateur.');
+      alert("Impossible d'accéder au microphone. Note : L'accès à distance nécessite impérativement une connexion HTTPS sécurisée (ex: https://accordeur.virtuaworld.org via Reverse Proxy Caddy/Nginx) ou http://localhost.");
     }
-  }
-
-  stopMicrophone() {
-    if (this.hiddenAudioEl) {
-      this.hiddenAudioEl.pause();
-      this.hiddenAudioEl.srcObject = null;
-    }
-    if (this.micStream) {
-      this.micStream.getTracks().forEach(track => track.stop());
-      this.micStream = null;
-    }
-    if (this.audioContext) {
-      this.audioContext.close();
-      this.audioContext = null;
-    }
-    this.isListening = false;
-    if (this.micToggleBtn) this.micToggleBtn.classList.remove('active');
-    if (this.micBtnText) this.micBtnText.textContent = 'Activer le Micro';
-
-    this.log('🛑 STATUT MICRO: ARRÊTÉ');
-    this.resetUI();
   }
 
   resetUI() {

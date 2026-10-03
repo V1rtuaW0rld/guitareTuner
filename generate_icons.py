@@ -4,15 +4,18 @@ from PIL import Image, ImageDraw
 SRC_PATH = r"D:\Applications\Accordeur\GuitarCapoTuner.png"
 
 def make_square(img):
-    """Crops the image to a square from center with transparent or matched background."""
+    """Crops the image to a square from center with padding so it isn't zoomed/cropped."""
     w, h = img.size
-    size = max(w, h)
+    max_dim = max(w, h)
+    
+    # 15% padding margin around the graphic
+    canvas_size = int(max_dim * 1.18)
     
     # Create new RGBA square canvas
-    new_img = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+    new_img = Image.new("RGBA", (canvas_size, canvas_size), (0, 0, 0, 0))
     # Paste centered
-    offset_x = (size - w) // 2
-    offset_y = (size - h) // 2
+    offset_x = (canvas_size - w) // 2
+    offset_y = (canvas_size - h) // 2
     new_img.paste(img, (offset_x, offset_y))
     return new_img
 
