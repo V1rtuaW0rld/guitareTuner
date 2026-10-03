@@ -60,7 +60,7 @@ body {
 
 .app-container {
   width: 100%;
-  max-width: 1280px;
+  max-width: 2560px; /* Fully utilize full HD / 2K screens */
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -70,7 +70,7 @@ body {
 /* 2-Column Side-by-Side Dashboard Layout */
 .dashboard-grid {
   display: grid;
-  grid-template-columns: 4.2fr 5.8fr;
+  grid-template-columns: 1fr 380px;
   gap: 0.85rem;
   align-items: stretch;
   flex: 1;
@@ -430,7 +430,7 @@ body {
 /* Gauge Canvas Container - Dynamic flex growth depending on screen height */
 .gauge-container {
   width: 100%;
-  max-width: 580px;
+  max-width: 100%;
   flex: 1;
   min-height: 50px;
   position: relative;
