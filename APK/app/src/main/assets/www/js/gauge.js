@@ -95,8 +95,8 @@ export class TunerGauge {
     // Pivot de l'aiguille abaissé au maximum pour gagner de la longueur
     const centerY = h - 5; 
     
-    // Rayon élargi pour s'adapter à la largeur de l'écran sans être écrasé
-    const radius = Math.min(w * 0.48, h * 0.85);
+    // Rayon équilibré pour laisser de l'espace en haut pour le sismographe
+    const radius = Math.min(w * 0.46, h * 0.80);
 
     // Angular bounds (-50 cents = -Math.PI * 0.4, +50 cents = +Math.PI * 0.4)
     const minAngle = -Math.PI * 0.38;

@@ -360,11 +360,13 @@ body {
   backdrop-filter: blur(16px);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
-  padding: 0.75rem 1rem 0.65rem 1rem;
+  padding: 1rem 1.25rem;
   box-shadow: var(--shadow-glass);
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex: 1;
+  min-height: 0;
   position: relative;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -374,21 +376,19 @@ body {
   box-shadow: var(--shadow-intune);
 }
 
-/* Note Display Badge */
+/* Note Display Badge - Normal flow above gauge canvas */
 .note-display {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  position: absolute;
-  top: 0.65rem;
-  left: 0;
+  position: relative;
   width: 100%;
+  margin-bottom: 0.5rem;
   z-index: 10;
-  pointer-events: none;
 }
 
 .note-letter {
-  font-size: 3.8rem;
+  font-size: 4rem;
   font-weight: 800;
   line-height: 1;
   letter-spacing: -0.03em;
@@ -397,7 +397,7 @@ body {
 }
 
 .note-octave {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: 700;
   color: var(--text-muted);
   margin-top: 0.3rem;
@@ -418,18 +418,18 @@ body {
   color: var(--color-sharp);
 }
 
-/* Gauge Canvas Container */
+/* Gauge Canvas Container - Dynamic flex growth depending on screen height */
 .gauge-container {
   width: 100%;
-  max-width: 520px;
-  height: 195px;
-  max-height: 200px;
+  max-width: 580px;
+  flex: 1;
+  min-height: 190px;
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: stretch;
-  margin: 1.8rem 0 0 0;
+  margin: 0;
 }
 
 #gaugeCanvas {
@@ -545,11 +545,11 @@ body {
 /* Audio Visualizer Monitor Equalizer */
 .visualizer-container {
   width: 100%;
-  height: 48px;
+  height: 64px;
   background: rgba(15, 23, 42, 0.6);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
-  margin-top: 0.35rem;
+  margin-top: 0.6rem;
   position: relative;
   overflow: hidden;
 }
@@ -562,16 +562,16 @@ body {
 
 .visualizer-label {
   position: absolute;
-  top: 4px;
-  left: 8px;
-  font-size: 0.6rem;
+  top: 6px;
+  left: 10px;
+  font-size: 0.65rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--text-muted);
   pointer-events: none;
   background: rgba(15, 23, 42, 0.7);
-  padding: 0.1rem 0.35rem;
+  padding: 0.1rem 0.4rem;
   border-radius: 4px;
 }
 
@@ -932,10 +932,12 @@ body {
   }
 
   .tuner-column {
-    min-height: auto;
+    min-height: calc(100vh - 0.5rem);
+    min-height: calc(100dvh - 0.5rem);
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    justify-content: space-between;
+    gap: 0.35rem;
   }
 
   .side-column {
@@ -959,32 +961,35 @@ body {
   }
 
   .tuner-card {
-    padding: 0.4rem 0.5rem 0.35rem 0.5rem;
+    padding: 0.5rem 0.6rem;
     border-radius: var(--radius-md);
-    flex: 0 0 auto;
+    flex: 1;
+    min-height: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
   .note-display {
-    top: 0.35rem;
+    position: relative;
+    top: 0;
+    margin-bottom: 0.25rem;
   }
 
   .note-letter {
-    font-size: 3rem;
+    font-size: 3.2rem;
   }
 
   .gauge-container {
-    height: 150px;
-    max-height: 155px;
+    flex: 1;
+    min-height: 160px;
     width: 100%;
-    max-width: 400px;
-    margin: 1.5rem 0 0 0;
+    max-width: 440px;
+    margin: 0;
   }
 
   .readout-row {
-    margin-top: 0.15rem;
+    margin-top: 0.25rem;
     padding-top: 0.25rem;
   }
 
@@ -997,46 +1002,47 @@ body {
   }
 
   .status-badge {
-    padding: 0.25rem 0.6rem;
+    padding: 0.25rem 0.5rem;
     font-size: 0.72rem;
   }
 
   .volume-meter {
-    height: 11px;
-    margin-top: 0.2rem;
+    height: 12px;
+    margin-top: 0.25rem;
   }
 
   .db-val-overlay {
     font-size: 0.6rem;
   }
 
+  /* Moniteur Audio FFT Equalizer Monitor - Restored to 60px full height */
   .visualizer-container {
-    margin-top: 0.2rem;
+    margin-top: 0.25rem;
     padding: 0.1rem 0.3rem;
     flex: 0 0 auto;
-    height: 40px;
+    height: 60px;
     display: flex;
     flex-direction: column;
     justify-content: center;
   }
 
   .visualizer-container canvas {
-    height: 32px;
+    height: 100%;
     width: 100%;
   }
 
   .strings-card {
-    padding: 0.35rem 0.4rem;
+    padding: 0.4rem 0.45rem;
     border-radius: var(--radius-md);
     flex-shrink: 0;
   }
 
   .strings-header {
-    margin-bottom: 0.2rem;
+    margin-bottom: 0.25rem;
   }
 
   .strings-title {
-    font-size: 0.7rem;
+    font-size: 0.72rem;
   }
 
   .auto-btn {
@@ -1050,7 +1056,7 @@ body {
   }
 
   .string-pin {
-    padding: 0.25rem 0.1rem;
+    padding: 0.3rem 0.1rem;
     border-radius: var(--radius-sm);
   }
 
