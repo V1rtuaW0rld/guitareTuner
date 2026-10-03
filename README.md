@@ -42,8 +42,8 @@
 
 ## 📥 Téléchargements
 
-* 📱 **Application Android (.apk)** : [📥 Télécharger l'APK Android (Google Drive)](LIEN_GOOGLE_DRIVE_APK_ICI) *(Insérer votre lien Google Drive ici)*
-* 💻 **Application Windows (.exe / .zip)** : [📥 Télécharger l'application Windows (.exe / .zip)](LIEN_TELECHARGEMENT_EXE_ICI) *(Insérer votre lien de téléchargement ici)*
+* 📱 **Application Android (.apk)** : [📥 Télécharger l'APK Android (Google Drive)]([LIEN_GOOGLE_DRIVE_APK_ICI](https://drive.google.com/file/d/1q6RLkV2aqx9a7qrLpGRfBf81knybQ4UG/view?usp=sharing)) *(Insérer votre lien Google Drive ici)*
+* 💻 **Application Windows (.exe / .zip)** : [📥 Télécharger l'application Windows (.exe / .zip)](LIEN_TELECHARGEMENT_EXE_ICI) https://drive.google.com/file/d/1aU8chH03GKxsztbw2qrDnV6cKKk0EBcJ/view?usp=sharing
 
 ---
 
